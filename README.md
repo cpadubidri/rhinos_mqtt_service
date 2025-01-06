@@ -44,3 +44,13 @@
     │   │   ├── thingsboard_api.py # ThingsBoard MQTT API client
     │   │   └── tb_data_mapper.py  # Maps data to ThingsBoard format
     └── main.py                   # Entry point for the application
+
+
+    
+    app/
+    ├── core/
+    │   ├── mqtt_client.py         # Manages MQTT connectivity and subscriptions
+    │   ├── message_handler.py     # Handles decoding and processing logic
+    │   ├── response_handler.py    # Handles responding to login and other messages
+    │   └── forwarder.py           # Sends telemetry data to ThingsBoard or other destinations
+
