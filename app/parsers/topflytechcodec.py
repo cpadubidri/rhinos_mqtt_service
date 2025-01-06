@@ -1097,9 +1097,9 @@ def byte2HexString(byteArray,index):
 
 
 def hexString2Bytes(hexStr):
-    hexData = hexStr.decode("hex")#python2.7
-    return map(ord,hexData)#python2.7
-    #return bytes.fromhex(hexStr)  # python 3.x
+    # hexData = hexStr.decode("hex")#python2.7
+    # return map(ord,hexData)#python2.7
+    return bytes.fromhex(hexStr)  # python 3.x
 
 
 def formatNumb(numb):
@@ -1108,8 +1108,9 @@ def formatNumb(numb):
 
 def short2Bytes(number):
     str = '{:04x}'.format(number)
-    #return bytes.fromhex(str)  # python 3.X
-    return map(ord,'{:04x}'.format(number).decode("hex"))#python 2.7
+    return bytes.fromhex(str)  # python 3.X
+    # return map(ord,'{:04x}'.format(number).decode("hex"))#python 2.7
+    
 def tftCrc8(ptr):
     crc = 0xff
     index = 0
@@ -1975,6 +1976,7 @@ class Decoder:
             else:
                 self.decoderBuf.skipBytes(1)
         return messages
+
     def build(self,byteArray):
         if (byteArray[0] == 0x23 and byteArray[1] == 0x23) or (byteArray[0] == 0x25 and byteArray[1] == 0x25):
             if byteArray[2] == 0x01:
