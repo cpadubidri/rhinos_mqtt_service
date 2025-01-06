@@ -1,9 +1,38 @@
 # rhinos_mqtt_service
 
 
+## Overview
 
+This project is a smart system designed to connect and manage multiple **PioneerX 101 Hubs**, which collect data from Bluetooth sensors like temperature and humidity. The data is processed on an Ubuntu server and visualized on a user-friendly dashboard powered by **ThingsBoard**.
 
-### Block diagram
+The system facilitates seamless communication between hardware devices, the server, and the dashboard, making it easy to monitor environmental data in real-time.
+
+---
+
+## System Workflow
+
+The system operates in three main stages:
+
+### 1. Data Collection
+- **PioneerX 101 Hubs** collect data from connected Bluetooth sensors (e.g., temperature and humidity).
+- The hub sends this data to the Ubuntu server using a communication protocol called **MQTT**.
+
+### 2. Data Processing
+- The **Ubuntu server** acts as the brain of the system. It:
+  - Receives data from the hubs.
+  - Decodes and validates the data.
+  - Prepares the data for visualization.
+- The server ensures that all hubs are logged in and authenticated before sending their data.
+
+### 3. Data Visualization
+- The processed data is sent to the **ThingsBoard Dashboard**.
+- Users can view real-time sensor data in an intuitive, graphical interface.
+
+---
+
+## System Design
+
+Here’s a simplified diagram of how the system works:
 
     +-------------------------+          +------------------------+         +-----------------------+
     | PioneerX 101 Hub        |          | Ubuntu Server          |         | ThingsBoard Dashboard |
@@ -13,44 +42,51 @@
 
 
 
-### Folder structure
+---
 
-    mqtt_iot_service/
-    ├── README.md                 # Project documentation
-    ├── requirements.txt          # Python dependencies
-    ├── tests/                    # Unit and integration tests
-    │   ├── test_codecs.py         # Tests for TopflytechCodec
-    │   ├── test_mqtt_client.py    # Tests for MQTT communication
-    │   ├── test_data_processor.py # Tests for data processing
-    │   └── test_integration.py    # End-to-end tests
-    ├── app/                      # Main application directory
-    │   ├── __init__.py           # Makes `app/` a package
-    │   ├── config/               # Configuration files
-    │   │   ├── config.py         # Centralized configuration logic
-    │   │   ├── constants.py      # Application constants
-    │   ├── core/                 # Core functionality
-    │   │   ├── __init__.py
-    │   │   ├── mqtt_client.py    # MQTT client setup and communication
-    │   │   ├── data_processor.py # Processes decoded data
-    │   │   ├── logger.py         # Logging utility
-    │   │   ├── db_handler.py     # Database interaction logic (future)
-    │   │   ├── logic_engine.py   # Custom processing logic (future)
-    │   │   └── forwarder.py      # Forwards data to custom dashboard (future)
-    │   ├── parsers/              # Parsing and decoding logic
-    │   │   ├── __init__.py
-    │   │   └── TopflytechCodec.py # Decoder for PioneerX 101
-    │   ├── thingsboard/          # ThingsBoard-specific integration
-    │   │   ├── __init__.py
-    │   │   ├── thingsboard_api.py # ThingsBoard MQTT API client
-    │   │   └── tb_data_mapper.py  # Maps data to ThingsBoard format
-    └── main.py                   # Entry point for the application
+## Features
+
+### 1. Device Management
+- Automatically authenticates each PioneerX 101 Hub.
+- Tracks device status and activity.
+
+### 2. Real-Time Data
+- Collects and processes data in real-time.
+- Displays temperature, humidity, and other sensor readings instantly.
+
+### 3. Centralized Dashboard
+- Provides a single dashboard to monitor all devices and their data.
+- Allows non-technical users to view graphs, charts, and reports.
+
+### 4. Scalability
+- Can handle multiple hubs and sensors, making it suitable for large-scale deployments.
 
 
-    
-    app/
-    ├── core/
-    │   ├── mqtt_client.py         # Manages MQTT connectivity and subscriptions
-    │   ├── message_handler.py     # Handles decoding and processing logic
-    │   ├── response_handler.py    # Handles responding to login and other messages
-    │   └── forwarder.py           # Sends telemetry data to ThingsBoard or other destinations
+
+### Directory structure:
+
+    Rhinos_mqtt_service.git/
+    ├── README.md
+    ├── app/
+    │   ├── __init__.py
+    │   ├── main.py
+    │   ├── config/
+    │   │   ├── __init__.py
+    │   │   └── config.py
+    │   ├── core/
+    │   │   ├── __init__.py
+    │   │   ├── data_processor.py
+    │   │   ├── message_handler.py
+    │   │   ├── mqtt_client.py
+    │   │   └── mqtt_client_.py
+    │   ├── parsers/
+    │   │   ├── __init__.py
+    │   │   └── topflytechcodec.py
+    │   └── utils/
+    │       ├── __init__.py
+    │       └── utils.py
+    └── test/
+        ├── clear_publish.py
+        └── test_decoder.py
+
 
