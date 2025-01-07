@@ -67,21 +67,19 @@ class MQTTClient:
 
         if "_S" in msg.topic:
             # Login message
-            response_topic, response = self.message_handler.login_message(msg.topic, msg.payload)
+            response_topic, response = self.message_handler.handle_message(msg.topic, msg.payload)
             if response_topic and response:
                 self.publish(response_topic, response)
             else:
                 print("Msg not published")
-
-        # elif "_data" in msg.topic:
-        #     # Data message (e.g., telemetry or sensor data)
-        #     self.message_handler.login_message(msg.topic, msg.payload)
         elif "_R" in msg.topic:
             print(  f"{Fore.CYAN}[{get_timestamp()}] {Fore.GREEN}[INFO]{Fore.RESET} "
                 f"Meesage Ignored. Reason: Self Published Message!! {Fore.YELLOW}{msg.topic}{Style.RESET_ALL}"
             )
         else:
-            print(msg.topic, '>>>>>', msg.payload)
+            print(  f"{Fore.CYAN}[{get_timestamp()}] {Fore.YELLOW}[[WARNING]]{Fore.RESET} "
+                f"Unknown Message Received on Topic:{Fore.YELLOW}{msg.topic}{Style.RESET_ALL}"
+            )
         
 
         print("################################################################")
